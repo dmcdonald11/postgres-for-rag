@@ -7,6 +7,7 @@ This stack combines:
 
 ## Usage
 
+This Docker Container creates a PostgresSQL server that will support LightRAG AI as its postgres database for Vector, Graph and Document storage.
 1. Clone this repo:
    ```bash
    git clone https://github.com/yourusername/postgres-graph-vector.git
