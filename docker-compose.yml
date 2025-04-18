@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  postgres-for-rag:
+    build: 
+      context: .
+      args:
+        POSTGRES_ADMIN_USER: ${POSTGRES_ADMIN_USER:-postgres}
+        POSTGRES_ADMIN_PASSWORD: ${POSTGRES_ADMIN_PASSWORD:-postgres123}
+    container_name: postgres-for-rag
+    environment:
+      POSTGRES_ADMIN_USER: ${POSTGRES_ADMIN_USER:-postgres}
+      POSTGRES_ADMIN_PASSWORD: ${POSTGRES_ADMIN_PASSWORD:-postgres123}
+    ports:
+      - "0.0.0.0:5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data    # Volume for persistent data
+      - ./data:/mnt/data                    # Placeholder: Mount your external files here
+
+volumes:
+  pg_data:
