@@ -7,10 +7,12 @@ ENV LANG=en_US.utf8
 # Build arguments for PostgreSQL admin credentials
 ARG POSTGRES_ADMIN_USER
 ARG POSTGRES_ADMIN_PASSWORD
+ARG POSTGRES_DB
 
 # Environment variables for PostgreSQL admin credentials
 ENV POSTGRES_ADMIN_USER=${POSTGRES_ADMIN_USER:-"admin"}
 ENV POSTGRES_ADMIN_PASSWORD=${POSTGRES_ADMIN_PASSWORD:-"securepassword123"}
+ENV POSTGRES_DB=${POSTGRES_DB:-"app_db"}
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \

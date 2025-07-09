@@ -3,6 +3,7 @@
 # Default values for environment variables
 POSTGRES_ADMIN_USER=${POSTGRES_ADMIN_USER:-"admin"}
 POSTGRES_ADMIN_PASSWORD=${POSTGRES_ADMIN_PASSWORD:-"securepassword123"}
+POSTGRES_DB=${POSTGRES_DB:-"app_db"}
 
 # Create log directory with proper permissions
 mkdir -p $PGDATA/log
@@ -30,11 +31,11 @@ done
 psql -d postgres -c "CREATE USER $POSTGRES_ADMIN_USER WITH SUPERUSER PASSWORD '$POSTGRES_ADMIN_PASSWORD';"
 
 # Create database and extensions if they don't exist
-psql -d postgres -c "SELECT 1 FROM pg_database WHERE datname = 'mydb'" | grep -q 1 || createdb mydb
-psql -d mydb -c "CREATE EXTENSION IF NOT EXISTS vector;"
-psql -d mydb -c "CREATE EXTENSION IF NOT EXISTS age;"
-psql -d mydb -c "LOAD 'age';"
-psql -d mydb -c "SET search_path = ag_catalog, '$user', public;"
+psql -d postgres -c "SELECT 1 FROM pg_database WHERE datname = '$POSTGRES_DB'" | grep -q 1 || createdb $POSTGRES_DB
+psql -d $POSTGRES_DB -c "CREATE EXTENSION IF NOT EXISTS vector;"
+psql -d $POSTGRES_DB -c "CREATE EXTENSION IF NOT EXISTS age;"
+psql -d $POSTGRES_DB -c "LOAD 'age';"
+psql -d $POSTGRES_DB -c "SET search_path = ag_catalog, '$user', public;"
 
 # Stop PostgreSQL - the container's CMD will start it properly
 /usr/local/pgsql/bin/pg_ctl -D $PGDATA stop
